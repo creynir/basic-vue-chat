@@ -5,27 +5,25 @@
       {{ date }}
     </div>
     <div class="message__contents">
-      {{ contents }}
+      {{ text }}
     </div>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'MessageOwn',
-  props: {
-    date: {
-      type: String,
-      default: '16:30:00',
-      required: false
-    },
-    contents: {
-      type: String,
-      default: 'hello',
-      required: false
+    name: 'MessageOwn',
+    props: {
+        date: {
+            type: Number,
+            required: true
+        },
+        text: {
+            type: String,
+            required: true
+        }
     }
-  }
-}
+};
 </script>
 
 <style>

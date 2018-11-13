@@ -11,14 +11,14 @@
         class="window__messages__container">
         <slot>
           <messages-list
-            :feed="feed"
-            :author-id="authorId"
-            class="messages-list" />
+            :message-list="messageList"
+            :author-id="author.visitorId"
+            class="messages-list"/>
         </slot>
       </section>
       <div class="window__input__container">
         <slot name="input-container">
-          <input-container @newOwnMessage="onNewOwnMessage" />
+          <input-container @newOwnMessage="onNewOwnMessage"/>
         </slot>
       </div>
     </section>
@@ -26,93 +26,54 @@
 </template>
 
 <script>
-import moment from 'moment'
-import { scrollToBottom } from '../../helpers/scroll.js'
-import MessagesList from './messages/MessagesList.vue'
-import InputContainer from './input/InputContainer.vue'
+import { scrollToBottom } from '../../helpers/scroll.js';
+import MessagesList from './messages/MessagesList.vue';
+import InputContainer from './input/InputContainer.vue';
 
 export default {
-  name: 'BasicVueChat',
-  components: {
-    MessagesList,
-    InputContainer
-  },
-  props: {
-    title: {
-      type: String,
-      default: 'Team Maczan',
-      required: false
+    name: 'BasicVueChat',
+    components: {
+        MessagesList,
+        InputContainer
     },
-    initialAuthorId: {
-      type: Number,
-      default: 0,
-      required: false
+    props: {
+        title: {
+            type: String,
+            default: '',
+            required: false
+        },
+        author: {
+            type: Object,
+            required: true
+        },
+        messageList: {
+            type: Array,
+            required: true
+        },
+        onSend: {
+            type: Function,
+            required: true
+        }
     },
-    attachMock: {
-      type: Boolean,
-      default: false,
-      required: false
+    watch: {
+        messageList: function (newValue, oldValue) {
+            scrollToBottom();
+        }
     },
-    initialFeed: {
-      type: Array,
-      default: function () {
-        return []
-      },
-      required: false
+    mounted () {
     },
-    newMessage: {
-      type: Object,
-      default: function () {
-        return {}
-      },
-      required: false
+    methods: {
+        onNewOwnMessage (message) {
+            const newOwnMessage = {
+                text: message,
+                date: Date.now(),
+                author: this.author
+            };
+            this.onSend(newOwnMessage);
+        }
     }
-  },
-  data: function () {
-    return {
-      feed: [],
-      authorId: 0
-    }
-  },
-  watch: {
-    newMessage: function (newValue, oldValue) {
-      this.pushToFeed(newValue)
-      scrollToBottom()
-    }
-  },
-  mounted () {
-    if (this.attachMock) {
-      import('./mocks/mock-messages-list.js').then(mockData => {
-        this.feed = mockData.default.feed
-        this.setAuthorId(mockData.default.authorId)
-      }).catch(error => {
-        console.error('Failed to load mock data from file. ', error)
-      })
-    } else {
-      this.feed = this.initialFeed
-      this.authorId = this.initialAuthorId
-    }
-  },
-  methods: {
-    pushToFeed (element) {
-      this.feed.push(element)
-    },
-    onNewOwnMessage (message) {
-      const newOwnMessage = {
-        id: this.authorId,
-        contents: message,
-        date: moment().format('H:m:s')
-      }
 
-      this.pushToFeed(newOwnMessage)
-
-      scrollToBottom()
-
-      this.$emit('newOwnMessage', message)
-    }
-  }
-
-}
+};
 </script>
 
 <style lang="scss">

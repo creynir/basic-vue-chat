@@ -1,6 +1,6 @@
 module.exports = {
 
-  // buble: {
-  //   objectAssign: 'Object.assign'
-  // }
-}
+    // buble: {
+    //   objectAssign: 'Object.assign'
+    // }
+};

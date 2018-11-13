@@ -15,20 +15,20 @@
 
 <script>
 export default {
-  name: 'InputField',
-  props: {
-    value: {
-      type: String,
-      default: '',
-      required: false
+    name: 'InputField',
+    props: {
+        value: {
+            type: String,
+            default: '',
+            required: false
+        }
+    },
+    methods: {
+        send (event) {
+            this.$emit('newOwnMessage');
+        }
     }
-  },
-  methods: {
-    send (event) {
-      this.$emit('newOwnMessage')
-    }
-  }
-}
+};
 </script>
 
 <style>

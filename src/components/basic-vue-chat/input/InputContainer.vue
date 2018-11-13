@@ -12,30 +12,30 @@
 </template>
 
 <script>
-import InputField from './InputField.vue'
-import InputButton from './InputButton.vue'
+import InputField from './InputField.vue';
+import InputButton from './InputButton.vue';
 
 export default {
-  name: 'InputContainer',
-  components: {
-    InputField,
-    InputButton
-  },
-  data: function () {
-    return {
-      message: ''
-    }
-  },
-  methods: {
-    onNewOwnMessage () {
-      if (!this.message || this.message === '') {
-        return
-      }
+    name: 'InputContainer',
+    components: {
+        InputField,
+        InputButton
+    },
+    data: function () {
+        return {
+            message: ''
+        };
+    },
+    methods: {
+        onNewOwnMessage () {
+            if (!this.message || this.message === '') {
+                return;
+            }
 
-      this.$emit('newOwnMessage', this.message)
+            this.$emit('newOwnMessage', this.message);
 
-      this.message = ''
+            this.message = '';
+        }
     }
-  }
-}
+};
 </script>

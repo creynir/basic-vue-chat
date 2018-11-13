@@ -3,52 +3,48 @@
     name="messages-list"
     tag="div">
     <div
-      v-for="message in feed"
+      v-for="message in messageList"
       :key="messageKey(message)"
       class="messages-list-item">
       <message-own
-        v-if="message.id === authorId"
+        v-if="message.author.visitorId === authorId"
         :date="message.date"
-        :contents="message.contents" />
+        :text="message.text" />
       <message-foreign
         v-else
-        :author="message.author"
+        :author="message.author.name"
         :date="message.date"
-        :contents="message.contents" />
+        :text="message.text" />
     </div>
   </transition-group>
 </template>
 
 <script>
-import MessageOwn from './MessageOwn.vue'
-import MessageForeign from './MessageForeign.vue'
+import MessageOwn from './MessageOwn.vue';
+import MessageForeign from './MessageForeign.vue';
 
 export default {
-  name: 'MessagesList',
-  components: {
-    MessageOwn,
-    MessageForeign
-  },
-  props: {
-    feed: {
-      type: Array,
-      default: function () {
-        return []
-      },
-      required: false
+    name: 'MessagesList',
+    components: {
+        MessageOwn,
+        MessageForeign
     },
-    authorId: {
-      type: Number,
-      default: 0,
-      required: false
+    props: {
+        messageList: {
+            type: Array,
+            required: true
+        },
+        authorId: {
+            type: String,
+            required: true
+        }
+    },
+    methods: {
+        messageKey (message) {
+            return message.text + message.date;
+        }
     }
-  },
-  methods: {
-    messageKey (message) {
-      return message.contents + message.date
-    }
-  }
-}
+};
 </script>
 
 <style lang="scss" scoped>

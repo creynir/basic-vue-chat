@@ -9,13 +9,13 @@
 <script>
 
 export default {
-  name: 'InputButton',
-  methods: {
-    send (event) {
-      this.$emit('newOwnMessage')
+    name: 'InputButton',
+    methods: {
+        send (event) {
+            this.$emit('newOwnMessage');
+        }
     }
-  }
-}
+};
 </script>
 
 <style>

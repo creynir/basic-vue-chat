@@ -121,13 +121,13 @@ Pass prop `title` to BasicVueChat component.
 
 ### Initial data
 
-Pass prop `initialFeed` to BasicVueChat component.
+Pass prop `initialMessages` to BasicVueChat component.
 ```html
-<basic-vue-chat :initial-feed="feed" />
+<basic-vue-chat :initial-messageList="messageList" />
 ```
 Example of correct data structure:
 ```javascript
-const feed = [
+const messageList = [
   {
     id: 0,
     author: 'Person',
